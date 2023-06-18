@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/add_note/add_note.dart';
 import 'package:notes_app/cubit/states.dart';
 import 'package:notes_app/note_screen/note_screen.dart';
@@ -45,13 +46,18 @@ class HomePage extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: GestureDetector(
                         onTap: () {
+                          int id = cubit.notes[index]['id'];
                           String noteText = cubit.notes[index]['body'];
-                          navigateTo(context, NoteScreen(noteText: noteText));
+                          String noteDate = DateFormat.yMMMd().format(
+                              DateTime.parse(cubit.notes[index]['date']));
+                          navigateTo(
+                              context,
+                              NoteScreen(
+                                  noteText: noteText, noteDate: noteDate , id: id));
                         },
                         child: Container(
                           width: 100,
                           height: 150,
-                          decoration: BoxDecoration(color: Colors.grey),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -65,7 +71,12 @@ class HomePage extends StatelessWidget {
                               // SizedBox(
                               //   height: 20,
                               // ),
-                              Padding(
+                              Container(
+                                width: double.infinity,
+                                height: 220,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(20)),
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   "${cubit.notes[index]['body']}",
@@ -75,7 +86,10 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                               Spacer(),
-                              Center(child: Text('4 april')),
+                              Center(
+                                  child: Text(DateFormat.yMMMd().format(
+                                      DateTime.parse(
+                                          cubit.notes[index]['date'])))),
                               SizedBox(
                                 height: 20,
                               )

@@ -59,4 +59,25 @@ class AppCubit extends Cubit<NotesStates> {
       });
     });
   }
+
+  void updateData({required String body,required String date, required int id}) async {
+    database.rawUpdate(
+        'UPDATE notes SET body = ?,date = ? WHERE id = ?', ['$body','$date', id]).then((value) {
+      getDB(database);
+      emit(UpdateDataBaseState());
+      print('data updated ===============');
+    });
+  }
+
+    void deleteData({required int id}) async {
+    database.rawDelete('DELETE FROM notes WHERE id = ?', [id]).then((value) {
+      getDB(database);
+      emit(DeleteDataState());
+    });
+  }
+  
+  deleteDB() async {
+    await deleteDatabase('notes.db');
+    emit(DeletewholeDataBaseState());
+  }
 }

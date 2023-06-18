@@ -22,18 +22,30 @@ class AddNoteScreen extends StatelessWidget {
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               if (_Controller.text != "") {
-                cubit.insertDataBase(body: _Controller.text, date: '4 april');
+                cubit.insertDataBase(
+                    body: _Controller.text, date: DateTime.now().toString());
                 cubit.noteController.text = _Controller.text;
               }
               navigateAndFinish(context, HomePage());
             },
-            child: Text('Add Note'),
-            shape: StadiumBorder(),
+            child: Center(
+                child: Text(
+              'Add Note',
+              textAlign: TextAlign.center,
+            )),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           ),
           body: SingleChildScrollView(
-              child: TextField(
-            maxLines: 100,
-            controller: _Controller,
+              child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TextField(
+              autofocus: true,
+              
+              decoration: InputDecoration(border: InputBorder.none),
+              maxLines: null,
+              controller: _Controller,
+            ),
           )),
         );
       },

@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/cubit/cubit.dart';
 import 'package:notes_app/cubit/states.dart';
 
+import 'bloc_observer.dart';
 import 'home.dart';
 
 void main(context) {
   WidgetsFlutterBinding.ensureInitialized();
-  
-//   cubit.noteController.text = '''
+  Bloc.observer = MyBlocObserver();
+
 // a poem i wanna write
 // a poem i wanna write
 // a poem i wanna write
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
+        lazy: false,
         create: (BuildContext context) => AppCubit()..createDB(),
         child: BlocConsumer<AppCubit, NotesStates>(
             listener: (context, state) {},
